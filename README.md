@@ -56,13 +56,13 @@ searchList('lorem')
 
 To keep this package small, the "fuzzy" functionality is simple and straight forward. 
 
-- **0** list is filtered for an exact match
+- **0** - list is filtered for an exact match
 
-- **1** list items are searched for word(s) that contain some of the characters (case and space sensitive)
+- **1** - list items are searched for word(s) that contain some of the characters (case and space sensitive)
 
-- **2** same as 1 except case insensitive and spaces, "-", and "_" are ignored.
+- **2** - same as 1 except case insensitive and spaces, "-", and "_" are ignored.
 
-- **3** (default) same as 2 but is forgiving with some typos/abbreviations
+- **3** - (default) same as 2 but is forgiving with some typos/abbreviations
 
 fuzzy level 3 examples:
  
