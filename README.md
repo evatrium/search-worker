@@ -27,31 +27,24 @@ If the original list, or config need to be updated, simply call the factory func
 the same variable.
 
 ```js
+
 import {SearchWorker} from 'search-worker';
 let id = 0;
-const originalList = [];
-const add = name => originalList.push(({name, id: id++}));
-
-add('LOREM IPSUM DOLOR SIT AMET');
-add('Lorem Ipsum Dolor Sit Amet');
-add('lorem ipsum dolor sit amet');
-add('lorem-ipsum-dolor-sit-amet');
-add('lorem_ipsum_dolor_sit_amet');
-add('lorem');
-add('ipsum');
-add('dolor');
-
+const originalList = [
+    {name: 'lorem'},
+    {name: 'ipsum'},
+    {name: 'dolor'},
+];
 let searchList = SearchWorker(
     originalList, 
     {
         keys: ['name'], 
-        fuzzy: 0 /* 0 is exact match (to make example concise), defaults is 3 */
+        fuzzy: 0 /* 0 is exact match (for brevity), defaults is 3 */
     }
 );
-
 searchList('lorem')
     .then(updatedList=>{
-        console.log(updatedList) // [{name:'lorem', id:6}]
+        console.log(updatedList) // [{name:'lorem'}]
     })
 
 ```
