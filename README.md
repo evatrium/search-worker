@@ -13,7 +13,10 @@ Uses "greenlet" as a dependency for inline worker threading. (all together 754 B
 
 Fork or clone this repo and try out the demo locally, search through 10,000+ items with little or no noticeable lag 
 and to get a feel for the different fuzzy options.
-
+### Installation
+```
+npm install search-worker
+```
 ### Usage
 
 Create a search instance by calling the SearchWorker factory function. 
