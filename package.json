@@ -1,6 +1,6 @@
 {
   "name": "search-worker",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Simple fast text search that utilizes a web worker",
   "repository": {
     "type": "git",
