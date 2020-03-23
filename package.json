@@ -1,6 +1,6 @@
 {
   "name": "search-worker",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Simple fast text search that utilizes a web worker",
   "repository": {
     "type": "git",
@@ -37,7 +37,9 @@
       },
       "lib": {
         "preset": "lib",
-        "external": ["greenlet"]
+        "external": [
+          "greenlet"
+        ]
       }
     }
   },
