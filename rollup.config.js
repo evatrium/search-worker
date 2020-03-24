@@ -1,4 +1,4 @@
-import {config} from "./config/rollup";
+import config from 'rollup-configured';
 
 export default config();
 
