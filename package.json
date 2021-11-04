@@ -1,5 +1,5 @@
 {
-  "name": "evatrium",
+  "name": "search-worker",
   "version": "1.0.1",
   "description": "Simple fast text search that utilizes a web worker",
   "type": "module",
