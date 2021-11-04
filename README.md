@@ -41,5 +41,8 @@ searchList('lorem')
 
 ```
 
+### License
+
+[MIT]: https://choosealicense.com/licenses/mit/
 
 
