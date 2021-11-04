@@ -1,47 +1,105 @@
-import greenlet from "greenlet";
+import greenlet from 'greenlet';
 
 Promise.pending = Promise.race.bind(Promise, []);
+
 //greenlet can't reference anything outside its scope
-const worker = greenlet(function worker([initialize, value, keys, fuzzy = 3, originalList]) {
-    if (!initialize) {
-        const {data} = worker;
-        keys = data.keys;
-        fuzzy = data.fuzzy;
-        originalList = data.originalList;
-    } else worker.data = {keys, fuzzy, originalList};
-    return new Promise(resolve => {
-        let makeFuzzy = fuzzy > 1 ? v => (v + '').toLowerCase().split('_').join('').split('-').join('').split(' ').join('') : v => v,
-            fuzzyMatch = (search, target) => new RegExp('.*' + makeFuzzy(search).split('').join('.*') + '.*').test(makeFuzzy(target)), // https://stackoverflow.com/a/55338523/5429040
-            basicSearch = (search, target) => makeFuzzy(target).search(makeFuzzy(search)) !== -1,
-            exactMatch = (search, target) => search === target,
-            searchIt = fuzzy > 2 ? fuzzyMatch : fuzzy > 0 ? basicSearch : exactMatch,
-            updatedList = originalList.filter(item =>
-                keys ? keys.some(key => item[key] && searchIt(value, item[key])) : searchIt(value, item)
-            );
-        resolve([updatedList, value]);
-    })
-});
+function searcher(arg) {
+  // old school destructuring because babel likes to pull helpers in here
+  let newListInit = arg.newListInit;
+  let searchValue = arg.searchValue;
+  let keys = arg.keys;
+  let originalList = arg.originalList;
+  let dontSearch = arg.dontSearch || ['*', '\\', '_', '-', ' ', '(', ')', '?'];
+
+  // if we've passed a new list, or new keys, then keep them here so we don't have to transfer the list each time
+  if (newListInit) searcher.data = { keys, originalList };
+  else { // destructure the stored stuff
+    const data = searcher.data;
+    keys = data.keys;
+    originalList = data.originalList;
+  }
+
+  return new Promise(resolve => {
+
+    const makeFuzzy = v => dontSearch.reduce((a, c) => a.split(c).join(''), (v.toString().toLowerCase()));
+
+    const escapeRegExp = (value) => value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+
+    const searchValueFuzzied = makeFuzzy(escapeRegExp((searchValue || '')));
+
+    const searchRegex = new RegExp(searchValueFuzzied, 'i');
+
+    const searchIt = (item) => searchRegex.test(makeFuzzy(item));
+
+    // combine the keys and search it as a single string
+    const combineKeys = (item) => keys.reduce((acc, key) => {
+      if (item[key] !== undefined) acc = acc + item[key].toString();
+      return acc;
+    }, '');
+
+    const updatedList = originalList.filter(item =>
+      keys ? searchIt(combineKeys(item)) : searchIt(item)
+    );
+
+    resolve({ updatedList, originalSearchValue: searchValue });
+  });
+}
+
+
+let worker;
 
 export const SearchWorker = (_originalList, options = {}) => {
-    let originalList = [..._originalList],
-        newList = true, wasSearching = false,
-        resultsCache = {}, cancel, {keys, fuzzy} = options;
-    const workerSearch = value => {
-        wasSearching = true;
-        return new Promise(resolveIt => {
-            cancel = () => resolveIt(Promise.pending());
-            worker(newList ? [true, value, keys, fuzzy, originalList] : [false, value]).then(resolveIt);
-            newList = false;
-        })
-    };
-    return value => new Promise(resolve => {
-        wasSearching && (cancel && cancel(), wasSearching = false);
-        value.length === 0 ? resolve(originalList)
-            : resultsCache[value] ? resolve(resultsCache[value])
-            : workerSearch(value).then(([updatedList, originalSearchValue]) => {
-                resultsCache[originalSearchValue] = updatedList;
-                value === originalSearchValue && value.length !== 0 ? resolve(updatedList)
-                    : (value.length === 0) && resolve(originalList);
-            });
+  let originalList = [..._originalList],
+    newListInit = true,
+    resultsCache = {},
+    {
+      keys,
+      shouldUseWorker = () => !!window.Worker
+    } = options;
+
+  if (!worker) worker = shouldUseWorker() ? greenlet(searcher) : searcher;
+
+  const workerSearch = searchValue => {
+    searchInstance.wasSearching = true;
+    return new Promise(resolveIt => {
+      searchInstance.cancel = () => resolveIt(Promise.pending());
+      const arg = {
+        newListInit,
+        searchValue
+      };
+      (newListInit && Object.assign(arg, {
+        keys,
+        originalList
+      }));
+      worker(arg).then(resolveIt);
+      newListInit = false;
     });
+  };
+
+  let searchInstance = function(value) {
+    return new Promise(resolve => {
+      if (searchInstance.wasSearching) {
+        searchInstance.cancel();
+        searchInstance.wasSearching = false;
+      }
+
+      value.length === 0
+        ? resolve(originalList)
+        : resultsCache[value]
+        ? resolve(resultsCache[value])
+        : workerSearch(value).then(({ updatedList, originalSearchValue }) => {
+
+          resultsCache[originalSearchValue] = updatedList;
+
+          value === originalSearchValue && value.length !== 0
+            ? resolve(updatedList)
+            : (value.length === 0) && resolve(originalList);
+
+        });
+    });
+  };
+
+  searchInstance.cancel = () => 0;
+
+  return searchInstance;
 };

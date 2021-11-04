@@ -2,13 +2,20 @@
   "name": "search-worker",
   "version": "0.0.8",
   "description": "Simple fast text search that utilizes a web worker",
+  "type": "module",
+  "source": "src/index.js",
+  "exports": {
+    "require": "./lib/search-worker.cjs",
+    "default": "./lib/search-worker.modern.js"
+  },
+  "main": "./lib/search-worker.cjs",
+  "module": "./lib/search-worker.module.js",
+  "unpkg": "./lib/search-worker.umd.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/iosio/search-worker.git"
   },
   "license": "MIT",
-  "main": "lib/index.js",
-  "module": "lib/index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -22,26 +29,16 @@
     "web worker"
   ],
   "scripts": {
-    "start": "rollup -c -w --environment project:demo",
-    "build": "rollup -c --environment preset:lib",
+    "start": "wmr",
+    "build": "microbundle",
     "test": "exit 0"
-  },
-  "rollupConfig": {
-    "project": {
-      "demo": {
-        "preset": "dev",
-        "input": "demo/src/index.js",
-        "html": "demo/src/index.html",
-        "output": "demo/build"
-      }
-    }
   },
   "dependencies": {
     "greenlet": "^1.1.0"
   },
   "devDependencies": {
-    "preact": "^10.3.4",
-    "preact-virtual-list": "^0.3.1",
-    "rollup-configured": "^0.0.13"
+    "microbundle": "^0.14.1",
+    "preact": "^10.5.15",
+    "wmr": "^3.7.2"
   }
 }

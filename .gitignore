@@ -33,3 +33,7 @@ yarn-error.log*
 #locks
 yarn.lock
 package-lock.json
+
+.cache
+stats.html
+lib

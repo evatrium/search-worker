@@ -1,6 +1,6 @@
 body {
-    font:16px/1.21 'Helvetica Neue',arial,sans-serif;
-    font-weight:300;
+    font: 16px/1.21 'Helvetica Neue', arial, sans-serif;
+    font-weight: 300;
     /*height: 100vh;*/
 }
 
@@ -18,11 +18,10 @@ body {
 }
 
 .row {
+    display: flex;
     position: relative;
-    display: block;
     height: 30px;
     line-height: 30px;
     padding: 0 20px;
-    box-shadow: inset 0 -1px 0 #DDD;
     overflow: hidden;
 }
