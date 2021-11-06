@@ -1,6 +1,6 @@
 {
   "name": "search-worker",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Simple fast text search that utilizes a web worker",
   "type": "module",
   "source": "src/index.js",
