@@ -33,7 +33,7 @@ let searchList = SearchWorker(
   options // you can omit these options if you are searching an array of strings ex: ['lorem','ipsum']
 );
 
-searchList(searchValue)
+searchList('lorem')
   .then(updatedList => {
     console.log(updatedList) // [{name:'lorem', foo: 'bar'}]
   })
