@@ -40,7 +40,7 @@ searchList('lorem')
 
 ```
 
-**See the demo in this repo for usage with p/react**
+**See the [demo](https://github.com/iosio/search-worker/tree/master/public) in this repo for usage with p/react**
 
 ### License
 
