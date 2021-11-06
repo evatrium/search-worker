@@ -1,15 +1,23 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font: 16px/1.21 'Helvetica Neue', arial, sans-serif;
     font-weight: 300;
-    /*height: 100vh;*/
 }
 
 
 .list {
-    /*position: absolute;*/
-    /*top: 20%;*/
-    /*left: 20%;*/
-    height: 70vh;
+    height: calc(100vh - 170px);
     width: 100%;
     border: 1px solid #CCC;
     background: #FFF;
@@ -23,5 +31,10 @@ body {
     height: 30px;
     line-height: 30px;
     padding: 0 20px;
+    overflow: hidden;
+}
+
+.col {
+    width: 20%;
     overflow: hidden;
 }

@@ -33,7 +33,7 @@ function searcher(arg) {
 
     // combine the keys and search it as a single string
     const combineKeys = (item) => keys.reduce((acc, key) => {
-      if (item[key] !== undefined) acc = acc + item[key].toString();
+      if (item[key] !== undefined) acc = acc + '  ' + item[key].toString();
       return acc;
     }, '');
 
@@ -64,10 +64,10 @@ export const SearchWorker = (_originalList, options = {}) => {
     return new Promise(resolveIt => {
       searchInstance.cancel = () => resolveIt(Promise.pending());
       const arg = {
-        newListInit,
         searchValue
       };
       (newListInit && Object.assign(arg, {
+        newListInit,
         keys,
         originalList
       }));
