@@ -1,9 +1,7 @@
 import { h, render } from 'preact';
 import { useEffect, useState, useCallback } from 'preact/hooks';
 import PreactVirtualList from './preact-virtual-list';
-
 import { SearchWorker } from '../src';
-import './styles.css';
 import { data } from './data';
 
 

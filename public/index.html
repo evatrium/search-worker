@@ -1,15 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>WMR App</title>
-		<meta name="description" content="WMR App" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<link rel="icon" href="data:" />
-		<link rel="modulepreload" as="script" href="/index.js" />
-		<link rel="stylesheet" href="/styles.css" />
-	</head>
-	<body>
-		<script type="module" src="/index.js"></script>
-	</body>
+<head>
+	<meta charset="utf-8" />
+	<title>search-worker</title>
+	<meta name="description" content="wow much speed" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<link rel="icon" href="data:" />
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		html, body {
+			height: 100%;
+			width: 100%;
+			overflow-x: hidden;
+			background: #1f2022;
+			color: #afafbb;
+		}
+
+		body {
+			font: 16px/1.21 'Helvetica Neue', arial, sans-serif;
+			font-weight: 300;
+		}
+		.list {
+			height: calc(100vh - 170px);
+			width: 100%;
+			border: 1px solid #CCC;
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.row {
+			display: flex;
+			position: relative;
+			height: 30px;
+			line-height: 30px;
+			padding: 0 20px;
+			overflow: hidden;
+		}
+
+		.col {
+			width: 20%;
+			overflow: hidden;
+		}
+	</style>
+	<link rel="modulepreload" as="script" href="/index.js" />
+</head>
+<body>
+<script type="module" src="/index.js"></script>
+</body>
 </html>

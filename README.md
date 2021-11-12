@@ -26,7 +26,8 @@ const originalList = [
   { name: 'dolor', foo: 'buz' },
 ];
 
-const options = { keys: ['name', 'foo'] }
+const options = { keys: ['name', 'foo'] };
+// or const options = { keys: 'name,foo' };
 
 let searchList = SearchWorker(
   originalList,
@@ -36,7 +37,7 @@ let searchList = SearchWorker(
 searchList('lorem')
   .then(updatedList => {
     console.log(updatedList) // [{name:'lorem', foo: 'bar'}]
-  })
+  });
 
 ```
 
