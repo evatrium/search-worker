@@ -4,16 +4,15 @@
   "description": "Simple fast text search that utilizes a web worker",
   "type": "module",
   "source": "src/index.js",
-  "exports": {
-    "require": "./lib/search-worker.cjs",
-    "default": "./lib/search-worker.modern.js"
-  },
-  "main": "./lib/search-worker.cjs",
+  "main": "./lib/search-worker.js",
+  "umd:main": "./lib/search-worker.umd.js",
   "module": "./lib/search-worker.module.js",
   "unpkg": "./lib/search-worker.umd.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/iosio/search-worker.git"
+  "exports": {
+    "browser": "./lib/search-worker.module.js",
+    "import": "./lib/search-worker.mjs",
+    "require": "./lib/search-worker.cjs",
+    "default": "./lib/search-worker.modern.js"
   },
   "license": "MIT",
   "publishConfig": {
@@ -30,7 +29,7 @@
   ],
   "scripts": {
     "start": "wmr",
-    "build": "microbundle",
+    "build": "microbundle --name searchWorker",
     "test": "exit 0"
   },
   "dependencies": {
