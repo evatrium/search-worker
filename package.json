@@ -4,16 +4,7 @@
   "description": "Simple fast text search that utilizes a web worker",
   "type": "module",
   "source": "src/index.js",
-  "main": "./lib/search-worker.js",
-  "umd:main": "./lib/search-worker.umd.js",
-  "module": "./lib/search-worker.module.js",
-  "unpkg": "./lib/search-worker.umd.js",
-  "exports": {
-    "browser": "./lib/search-worker.module.js",
-    "import": "./lib/search-worker.mjs",
-    "require": "./lib/search-worker.cjs",
-    "default": "./lib/search-worker.modern.js"
-  },
+  "main": "src/index.js",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -29,14 +20,13 @@
   ],
   "scripts": {
     "start": "wmr",
-    "build": "microbundle --name searchWorker",
+    "build": "exit 0",
     "test": "exit 0"
   },
   "dependencies": {
     "greenlet": "^1.1.0"
   },
   "devDependencies": {
-    "microbundle": "^0.14.1",
     "preact": "^10.5.15",
     "wmr": "^3.7.2"
   }
